@@ -27,6 +27,7 @@ switch ($action) {
         break;
     case 'select_incident':
         $message = "This incident was added to our database.";
+        $incidents = IncidentDB::get_all_incidents();
         include('incident_select.php');
         break;
     case 'select_tech_for_incident':

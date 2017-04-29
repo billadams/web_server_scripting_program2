@@ -19,4 +19,21 @@ class IncidentDB {
         $statement->execute();
         $statement->closeCursor();
     }
+
+    public static function get_all_incidents()
+    {
+        $db = Database::getDB();
+
+        $query =
+            'SELECT * FROM incidents 
+              JOIN customers ON customers.customerID = incidents.incidentID
+              WHERE techID IS NULL
+              ORDER BY dateOpened DESC';
+        $statement = $db->prepare($query);
+        $statement->execute();
+        $incidents = $statement->fetchAll();
+        $statement->closeCursor();
+
+        return $incidents;
+    }
 }
