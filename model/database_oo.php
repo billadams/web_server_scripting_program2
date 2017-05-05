@@ -1,8 +1,8 @@
 <?php
 class Database {
-    private static $dsn = 'mysql:host=localhost;dbname=tech_support';
+    private static $dsn = 'mysql:host=localhost;port=3307;dbname=tech_support;';
     private static $username = 'root';
-    private static $password = 'Powerstroke172';
+    private static $password = '';
     private static $db;
 
     private function __construct() {}
@@ -13,6 +13,7 @@ class Database {
                 self::$db = new PDO(self::$dsn,
                                     self::$username,
                                     self::$password);
+                self::$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             } catch (PDOException $e) {
                 $error_message = $e->getMessage();
                 include('../errors/database_error.php');

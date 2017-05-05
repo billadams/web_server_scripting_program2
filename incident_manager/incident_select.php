@@ -12,21 +12,18 @@
             <th>Description</th>
             <th>&nbsp;</th>
         </tr>
-        <?php foreach ($incidents as $incident) :
-            $ts = strtotime($incident[ 'dateOpened' ]);
-            $date_opened_formatted = date('n/j/Y', $ts);
-            ?>
+        <?php foreach ($incidents as $incident) : ?>
             <tr>
-                <td><?php echo htmlspecialchars($incident[ 'firstName' ] . ' ' . $incident[ 'lastName' ]); ?></td>
-                <td><?php echo htmlspecialchars($incident[ '' ]); ?></td>
-                <td><?php echo htmlspecialchars($incident[ 'version' ]); ?></td>
-                <td><?php echo $release_date_formatted; ?></td>
+                <td><?php echo htmlspecialchars($incident['firstName'] . ' ' . $incident['lastName']); ?></td>
+                <td><?php echo htmlspecialchars($incident['productCode']); ?></td>
+                <td><?php echo htmlspecialchars($incident['dateOpened']); ?></td>
+                <td><?php echo htmlspecialchars($incident['title']); ?></td>
+                <td><?php echo htmlspecialchars($incident['description']); ?></td>
                 <td>
-                    <form action="." method="post">
-                        <input type="hidden" name="action" value="delete_product">
+                    <form action="select_tech_for_incident" method="post">
                         <input type="hidden" name="product_code"
-                               value="<?php echo htmlspecialchars($product[ 'productCode' ]); ?>">
-                        <input type="submit" value="Delete">
+                               value="<?php echo htmlspecialchars($incident[ 'productCode' ]); ?>">
+                        <input type="submit" value="Select">
                     </form>
                 </td>
             </tr>

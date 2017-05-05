@@ -25,10 +25,12 @@ class IncidentDB {
         $db = Database::getDB();
 
         $query =
-            'SELECT * FROM incidents 
-              JOIN customers ON customers.customerID = incidents.incidentID
-              WHERE techID IS NULL
-              ORDER BY dateOpened DESC';
+            'SELECT * 
+              FROM incidents 
+                JOIN customers ON incidents.customerID = customers.customerID
+                JOIN products on products.productCode = incidents.productCode
+              WHERE techID IS NULL';
+              //ORDER BY dateOpened DESC';
         $statement = $db->prepare($query);
         $statement->execute();
         $incidents = $statement->fetchAll();
