@@ -57,7 +57,7 @@ class TechnicianDB {
         $query = 'SELECT firstName, lastName, COUNT(*) AS openInvoices
                   FROM technicians JOIN incidents
                     ON technicians.techID = incidents.techID
-                  GROUP BY fullName';
+                  GROUP BY firstName, lastName';
         $statement = $db->prepare($query);
         $statement->bindValue(':first_name', $t->getFirstName());
         $statement->bindValue(':last_name', $t->getLastName());
