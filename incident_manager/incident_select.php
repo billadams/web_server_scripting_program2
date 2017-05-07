@@ -20,9 +20,9 @@
                 <td><?php echo htmlspecialchars($incident['title']); ?></td>
                 <td><?php echo htmlspecialchars($incident['description']); ?></td>
                 <td>
-                    <form action="select_tech_for_incident" method="post">
-                        <input type="hidden" name="product_code"
-                               value="<?php echo htmlspecialchars($incident[ 'productCode' ]); ?>">
+                    <form action="../technician_manager/index.php" method="post">
+                        <input type="hidden" name="incident_id"
+                               value="<?php echo htmlspecialchars($incident['incident_id']); ?>">
                         <input type="submit" value="Select">
                     </form>
                 </td>

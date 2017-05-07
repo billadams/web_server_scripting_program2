@@ -49,4 +49,22 @@ class TechnicianDB {
         $statement->execute();
         $statement->closeCursor();
     }
+
+    public static function get_num_open_incidents_by_technician()
+    {
+        $db = Database::getDB();
+
+        $query = 'SELECT firstName, lastName, COUNT(*) AS openInvoices
+                  FROM technicians JOIN incidents
+                    ON technicians.techID = incidents.techID
+                  GROUP BY fullName';
+        $statement = $db->prepare($query);
+        $statement->bindValue(':first_name', $t->getFirstName());
+        $statement->bindValue(':last_name', $t->getLastName());
+        $statement->bindValue(':phone', $t->getPhone());
+        $statement->bindValue(':email', $t->getEmail());
+        $statement->bindValue(':password', $t->getPassword());
+        $statement->execute();
+        $statement->closeCursor();
+    }
 }

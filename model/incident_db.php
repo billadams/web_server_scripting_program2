@@ -26,11 +26,27 @@ class IncidentDB {
 
         $query =
             'SELECT * 
+              FROM incidents';
+
+        $statement = $db->prepare($query);
+        $statement->execute();
+        $incidents = $statement->fetchAll();
+        $statement->closeCursor();
+
+        return $incidents;
+    }
+
+    public static function get_unassigned_incidents()
+    {
+        $db = Database::getDB();
+
+        $query =
+            'SELECT * 
               FROM incidents 
                 JOIN customers ON incidents.customerID = customers.customerID
                 JOIN products on products.productCode = incidents.productCode
               WHERE techID IS NULL';
-              //ORDER BY dateOpened DESC';
+        //ORDER BY dateOpened DESC';
         $statement = $db->prepare($query);
         $statement->execute();
         $incidents = $statement->fetchAll();

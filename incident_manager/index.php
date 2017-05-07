@@ -4,6 +4,8 @@ require('../model/customer_db.php');
 require('../model/product_db.php');
 require('../model/incident_db.php');
 
+session_start();
+
 $action = filter_input(INPUT_POST, 'action');
 if ($action === NULL) {
     $action = filter_input(INPUT_GET, 'action');
@@ -27,12 +29,16 @@ switch ($action) {
         break;
     case 'select_incident':
         $message = "This incident was added to our database.";
-        $incidents = IncidentDB::get_all_incidents();
+        $incidents = IncidentDB::get_unassigned_incidents();
         include('incident_select.php');
         break;
     case 'select_tech_for_incident':
         $message = "Selecting tech.";
-        include('select_tech_for_incident.php');
+        if (! isset($_SESSION['incident_id'])) {
+            $incident_id = filter_input(INPUT_POST, 'incident_id',FILTER_VALIDATE_INT);
+            $_SESSION['incident_id'] = $incident_id;
+        }
+        include('../technician_manager/select_tech_for_incident.php');
         break;
     case 'create_incident':
         $customer_id = filter_input(INPUT_POST, 'customer_id', FILTER_VALIDATE_INT);
