@@ -16,7 +16,7 @@
             </form>
         <?php else : ?>
             <p>This incident was assigned to a technician.</p>
-            <p><a href="../incident_manager/">Select another incident</a></p>
+            <p><a href="./">Select another incident</a></p>
         <?php endif; ?>
     </main>
 <?php include '../view/footer.php'; ?>
