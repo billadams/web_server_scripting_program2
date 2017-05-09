@@ -2,7 +2,7 @@
 <main>
 
     <h1>Select Technician</h1>
-
+    <?php var_dump($_SESSION); ?>
     <!-- display a table of technicians -->
     <table>
         <tr>
@@ -10,24 +10,21 @@
             <th>Open Incidents</th>
             <th>&nbsp;</th>
         </tr>
-        <?php foreach ($technicians as $technician) : ?>
+        <?php foreach ($rows as $row) : ?>
             <tr>
-                <td><?php echo htmlspecialchars($technician->getFullName()); ?></td>
-                <td><?php echo htmlspecialchars($technician->getEmail()); ?></td>
-                <td><?php echo htmlspecialchars($technician->getPhone()); ?></td>
-                <td><?php echo htmlspecialchars($technician->getPassword()); ?></td>
+                <td><?php echo htmlspecialchars($row['firstName'] . ' ' . $row['lastName']); ?></td>
+                <td><?php echo htmlspecialchars($row['openInvoices']); ?></td>
                 <td>
                     <form action="." method="post">
-                        <input type="hidden" name="action" value="delete_technician">
+                        <input type="hidden" name="action" value="assign_incident">
                         <input type="hidden" name="technician_id"
-                               value="<?php echo htmlspecialchars($technician->getID()); ?>">
-                        <input type="submit" value="Delete">
+                               value="<?php echo htmlspecialchars($row['techID']); ?>">
+                        <input type="submit" value="Select">
                     </form>
                 </td>
             </tr>
         <?php endforeach; ?>
     </table>
-    <p><a href="?action=show_add_form">Add Technician</a></p>
 
 </main>
 <?php include '../view/footer.php'; ?>

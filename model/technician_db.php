@@ -54,16 +54,29 @@ class TechnicianDB {
     {
         $db = Database::getDB();
 
-        $query = 'SELECT firstName, lastName, COUNT(*) AS openInvoices
+        $query = 'SELECT technicians.techID, firstName, lastName, COUNT(*) AS openInvoices
                   FROM technicians JOIN incidents
                     ON technicians.techID = incidents.techID
-                  GROUP BY firstName, lastName';
+                  GROUP BY firstName, lastName
+                  ORDER BY openInvoices';
+
         $statement = $db->prepare($query);
-        $statement->bindValue(':first_name', $t->getFirstName());
-        $statement->bindValue(':last_name', $t->getLastName());
-        $statement->bindValue(':phone', $t->getPhone());
-        $statement->bindValue(':email', $t->getEmail());
-        $statement->bindValue(':password', $t->getPassword());
+        $statement->execute();
+        $rows = $statement->fetchAll();
+        $statement->closeCursor();
+
+        return $rows;
+    }
+
+    public static function update_incident($incident_id, $technician_id) {
+        $db = Database::getDB();
+
+        $query = 'UPDATE incidents
+              SET techID = :technician_id
+              WHERE incidentID = :technician_id';
+        $statement = $db->prepare($query);
+        $statement->bindValue(':technician_id', $technician_id);
+        $statement->bindValue(':incident_id', $incident_id);
         $statement->execute();
         $statement->closeCursor();
     }

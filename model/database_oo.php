@@ -1,9 +1,9 @@
 <?php
 class Database {
 //    private static $dsn = 'mysql:host=localhost;port=3307;dbname=tech_support;';
-    private static $dsn = 'mysql:host=localhost;dbname=tech_support;';
+    private static $dsn = 'mysql:host=localhost;port=3307;dbname=tech_support;';
     private static $username = 'root';
-    private static $password = 'Powerstroke172';
+    private static $password = '';
     private static $db;
 
     private function __construct() {}

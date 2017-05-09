@@ -4,7 +4,7 @@
 <!-- the head section -->
 <head>
     <title>SportsPro Technical Support</title>
-    <link rel="stylesheet" type="text/css" href="/web_server_scripting/program2/main.css">
+    <link rel="stylesheet" type="text/css" href="/program2/main.css">
 </head>
 
 <!-- the body section -->
@@ -14,7 +14,7 @@
     <p>Sports management software for the sports enthusiast</p>
     <nav>
         <ul>
-            <li><a href="/web_server_scripting/program2/">Home</a></li>
+            <li><a href="/program2/">Home</a></li>
         </ul>
     </nav>
 </header>

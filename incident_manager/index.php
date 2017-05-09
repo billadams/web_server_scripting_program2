@@ -32,14 +32,6 @@ switch ($action) {
         $incidents = IncidentDB::get_unassigned_incidents();
         include('incident_select.php');
         break;
-    case 'select_tech_for_incident':
-        $message = "Selecting tech.";
-        if (! isset($_SESSION['incident_id'])) {
-            $incident_id = filter_input(INPUT_POST, 'incident_id',FILTER_VALIDATE_INT);
-            $_SESSION['incident_id'] = $incident_id;
-        }
-        include('../technician_manager/select_tech_for_incident.php');
-        break;
     case 'create_incident':
         $customer_id = filter_input(INPUT_POST, 'customer_id', FILTER_VALIDATE_INT);
         $product_code = filter_input(INPUT_POST, 'product_code');
@@ -49,6 +41,5 @@ switch ($action) {
         $message = "This incident was added to our database.";
         include('incident_create.php');
         break;
-
 }
 ?>
