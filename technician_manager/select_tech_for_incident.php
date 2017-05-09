@@ -2,7 +2,6 @@
 <main>
 
     <h1>Select Technician</h1>
-    <?php var_dump($_SESSION); ?>
     <!-- display a table of technicians -->
     <table>
         <tr>

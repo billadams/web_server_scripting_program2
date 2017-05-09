@@ -54,11 +54,11 @@ class TechnicianDB {
     {
         $db = Database::getDB();
 
-        $query = 'SELECT technicians.techID, firstName, lastName, COUNT(*) AS openInvoices
-                  FROM technicians JOIN incidents
-                    ON technicians.techID = incidents.techID
-                  GROUP BY firstName, lastName
-                  ORDER BY openInvoices';
+        $query = 'SELECT technicians.techID, firstName, lastName,
+	                (SELECT COUNT(incidents.techid)
+                    FROM incidents
+                    WHERE incidents.techID = technicians.techID) AS openInvoices
+                  FROM technicians';
 
         $statement = $db->prepare($query);
         $statement->execute();
@@ -68,16 +68,21 @@ class TechnicianDB {
         return $rows;
     }
 
-    public static function update_incident($incident_id, $technician_id) {
+    public static function get_technician_by_id($technician_id)
+    {
         $db = Database::getDB();
 
-        $query = 'UPDATE incidents
-              SET techID = :technician_id
-              WHERE incidentID = :technician_id';
+        $query =
+            'SELECT *
+            FROM technicians
+            WHERE techID = :technician_id';
+
         $statement = $db->prepare($query);
         $statement->bindValue(':technician_id', $technician_id);
-        $statement->bindValue(':incident_id', $incident_id);
         $statement->execute();
+        $row = $statement->fetch();
         $statement->closeCursor();
+
+        return $row;
     }
 }

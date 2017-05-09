@@ -54,4 +54,35 @@ class IncidentDB {
 
         return $incidents;
     }
+
+    public static function get_incident_by_id($incident_id)
+    {
+        $db = Database::getDB();
+
+        $query =
+            'SELECT *
+            FROM incidents
+            WHERE incidentID = :incident_id';
+
+        $statement = $db->prepare($query);
+        $statement->bindValue(':incident_id', $incident_id);
+        $statement->execute();
+        $row = $statement->fetch();
+        $statement->closeCursor();
+
+        return $row;
+    }
+
+    public static function update_incident($incident_id, $technician_id) {
+        $db = Database::getDB();
+
+        $query = 'UPDATE incidents
+              SET techID = :technician_id
+              WHERE incidentID = :incident_id';
+        $statement = $db->prepare($query);
+        $statement->bindValue(':technician_id', $technician_id);
+        $statement->bindValue(':incident_id', $incident_id);
+        $statement->execute();
+        $statement->closeCursor();
+    }
 }

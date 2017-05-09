@@ -2,6 +2,8 @@
 require('../model/database_oo.php');
 require('../model/technician.php');
 require('../model/technician_db.php');
+require('../model/incident_db.php');
+require('../model/customer_db.php');
 
 session_start();
 
@@ -57,10 +59,27 @@ switch ($action) {
         include('select_tech_for_incident.php');
         break;
     case 'assign_incident':
+        $assigned = false;
+
         $technician_id = filter_input(INPUT_POST, 'technician_id', FILTER_VALIDATE_INT);
         $_SESSION['technician_id'] = $technician_id;
 
-        $customer = CustomerDB::get_customer()
+        $incident = IncidentDB::get_incident_by_id($_SESSION['incident_id']);
+
+        $customer_id = $incident['customerID'];
+        $customer = CustomerDB::get_customer($customer_id);
+        $customer_name = $customer['firstName'] . ' ' .$customer['lastName'];
+
+        $product_code = $incident['productCode'];
+
+        $technician = TechnicianDB::get_technician_by_id($_SESSION['technician_id']);
+        $technician_name = $technician['firstName'] . ' ' . $technician['lastName'];
+
+        include('assign_incident.php');
+        break;
+    case 'update_incident':
+        $assigned = true;
+        IncidentDB::update_incident($_SESSION['incident_id'], $_SESSION['technician_id']);
 
         include('assign_incident.php');
         break;
